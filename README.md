@@ -1,6 +1,6 @@
 # dwm
 A custom build of dwm using [dwm-flexipatch](https://github.com/bakkeby/dwm-flexipatch) and [flexipatch-finalizer](https://github.com/bakkeby/flexipatch-finalizer).
-
+You can find the keybindings [here](https://github.com/imatsatsos/dwm/wiki#keybindings)
 ![1690027396](https://github.com/imatsatsos/dwm/assets/49369992/a38bbb19-95e6-4766-b97f-9065c29dc35c)
 
 ## Build & install
