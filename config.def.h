@@ -4,10 +4,10 @@
 static const unsigned int borderpx       = 2;   /* border pixel of windows */
 static const unsigned int snap           = 16;  /* snap pixel */
 static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
-static const unsigned int gappih         = 8;  /* horiz inner gap between windows */
-static const unsigned int gappiv         = 8;  /* vert inner gap between windows */
-static const unsigned int gappoh         = 4;  /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov         = 4;  /* vert outer gap between windows and screen edge */
+static const unsigned int gappih         = 8;   /* horiz inner gap between windows */
+static const unsigned int gappiv         = 8;   /* vert inner gap between windows */
+static const unsigned int gappoh         = 4;   /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov         = 4;   /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact          = 0;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 static const int showbar                 = 1;   /* 0 means no bar */
 static const int topbar                  = 0;   /* 0 means bottom bar */
@@ -30,8 +30,8 @@ static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
 static const int quit_empty_window_count = 0;   /* only allow dwm to quit if no (<= count) windows are open */
-static const char font[]                 = "ShureTechMono Nerd Font 11";
-static const char dmenufont[]            = "ShureTechMono Nerd Font:size=11";
+static const char font[]                 = "Ubuntu Nerd Font 11";
+static const char dmenufont[]            = "Ubuntu Nerd Font:size=11";
 
 static char c000000[]                    = "#000000"; // placeholder value
 
@@ -95,19 +95,10 @@ static char *colors[][ColCount] = {
 
 static const char *const autostart[] = {
 	"/usr/local/bin/dwmblocks", NULL,
-    "xrdb", "-load", "/home/john/.Xresources", NULL,
-    "dbus-update-activation-environment", "DISPLAY", "XAUTHORITY", NULL,
-    "/usr/bin/gnome-keyring-daemon", "--start", "--components","=ssh,secrets,pkcs11", NULL,
-    "/usr/libexec/polkit-gnome-authentication-agent-1", NULL,
-    //"setxkbmap", "-model", "pc105", "-layout", "us,gr", "-option", "grp:alt_shift_toggle,caps:escape", NULL,
-    "xset", "r", "rate", "280", "40", NULL,
-    "/usr/bin/pipewire", NULL,
-    "/usr/bin/pipewire-pulse", NULL,
-    "xwallpaper", "--maximize", "/home/john/.config/background", NULL,
-    "/home/john/.local/bin/onlogin.sh", NULL,
-    "/home/john/.local/bin/low_battery", NULL,
-    "/usr/bin/picom", "-b", NULL,
-    NULL
+  "/usr/bin/pipewire", NULL,
+  "/usr/bin/pipewire-pulse", NULL,
+  "/home/john/.local/bin/onlogin.sh", NULL,
+  NULL
 };
 
 
@@ -173,12 +164,15 @@ static const Rule rules[] = {
 	 */
 	RULE(.wintype = WTYPE "DIALOG", .isfloating = 1)
 	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
+	RULE(.wintype = WTYPE "NOTIFICATION", .isfloating = 1)
 	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
 	RULE(.class = "Gimp", .tags = 1 << 4)
 	RULE(.class = "Firefox", .tags = 1 << 7)
-	RULE(.class = "Alacritty", .isterminal =1)
+	RULE(.class = "Alacritty", .isterminal = 1)
+	RULE(.class = "st", .isterminal = 1)
 	RULE(.title = "Picture in picture", .isfloating = 1)
+	RULE(.title = "termfloat", .isfloating = 1, .isterminal = 1)
 };
 
 
@@ -198,7 +192,7 @@ static const Rule rules[] = {
 static const BarRule barrules[] = {
 	/* monitor   bar    alignment         widthfunc                 drawfunc                clickfunc                hoverfunc                name */
 	{ -1,        0,     BAR_ALIGN_LEFT,   width_tags,               draw_tags,              click_tags,              hover_tags,              "tags" },
-	{  0,        0,     BAR_ALIGN_LEFT,  width_systray,            draw_systray,           click_systray,           NULL,                    "systray" },
+	{  0,        0,     BAR_ALIGN_LEFT,   width_systray,            draw_systray,           click_systray,           NULL,                    "systray" },
 	{ -1,        0,     BAR_ALIGN_LEFT,   width_ltsymbol,           draw_ltsymbol,          click_ltsymbol,          NULL,                    "layout" },
 	{ statusmon, 0,     BAR_ALIGN_RIGHT,  width_status,             draw_status,            click_statuscmd,         NULL,                    "status" },
 	{ -1,        0,     BAR_ALIGN_NONE,   width_wintitle,           draw_wintitle,          click_wintitle,          NULL,                    "wintitle" },
@@ -246,7 +240,7 @@ static const char *dmenucmd[] = {
 	topbar ? NULL : "-b",
 	NULL
 };
-static const char *termcmd[]    = { "alacritty", NULL };
+static const char *termcmd[]    = { "/bin/sh", "-c", "$TERMINAL", NULL };
 static const char *filescmd[]   = { "pcmanfm", NULL };
 static const char *roficmd[]    = { "/home/john/.local/bin/rofi-launcher", NULL };
 static const char *lockcmd[]    = { "/home/john/.config/i3/scripts/i3exit", "lock", NULL };
@@ -293,26 +287,25 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_j,          movestack,              {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,          movestack,              {.i = -1 } },
 	{ MODKEY,                       XK_Return,     zoom,                   {0} },
-	{ MODKEY|Mod4Mask,              0,          incrgaps,               {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    0,          incrgaps,               {.i = -1 } },
-	{ MODKEY|Mod4Mask,              0,          incrigaps,              {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    0,          incrigaps,              {.i = -1 } },
-	{ MODKEY|Mod4Mask,              0,          incrogaps,              {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    0,          incrogaps,              {.i = -1 } },
-	{ MODKEY|Mod4Mask,              0,          incrihgaps,             {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    0,          incrihgaps,             {.i = -1 } },
-	{ MODKEY|Mod4Mask,              0,          incrivgaps,             {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    0,          incrivgaps,             {.i = -1 } },
-	{ MODKEY|Mod4Mask,              0,          incrohgaps,             {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    0,          incrohgaps,             {.i = -1 } },
-	{ MODKEY|Mod4Mask,              0,          incrovgaps,             {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    0,          incrovgaps,             {.i = -1 } },
-	{ MODKEY|Mod4Mask|ControlMask,  XK_g,       togglegaps,             {0} },
-	{ MODKEY|Mod4Mask,              0,          defaultgaps,            {0} },
+	{ MODKEY|Mod4Mask,              0,             incrgaps,               {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    0,             incrgaps,               {.i = -1 } },
+	{ MODKEY|Mod4Mask,              0,             incrigaps,              {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    0,             incrigaps,              {.i = -1 } },
+	{ MODKEY|Mod4Mask,              0,             incrogaps,              {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    0,             incrogaps,              {.i = -1 } },
+	{ MODKEY|Mod4Mask,              0,             incrihgaps,             {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    0,             incrihgaps,             {.i = -1 } },
+	{ MODKEY|Mod4Mask,              0,             incrivgaps,             {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    0,             incrivgaps,             {.i = -1 } },
+	{ MODKEY|Mod4Mask,              0,             incrohgaps,             {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    0,             incrohgaps,             {.i = -1 } },
+	{ MODKEY|Mod4Mask,              0,             incrovgaps,             {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    0,             incrovgaps,             {.i = -1 } },
+	{ MODKEY|Mod4Mask|ControlMask,  XK_g,          togglegaps,             {0} },
+	{ MODKEY|Mod4Mask,              0,             defaultgaps,            {0} },
 	{ Mod1Mask,                     XK_Tab,        alttabstart,            {0} },
 	{ MODKEY,                       XK_q,          killclient,             {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,          quit,                   {0} },
-	{ MODKEY,                       XK_u,          focusurgent,            {0} },
 	{ MODKEY,                       XK_t,          setlayout,              {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,          setlayout,              {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,          setlayout,              {.v = &layouts[2]} },

@@ -16,7 +16,6 @@
 #include "attachx.c"
 #include "cool_autostart.c"
 #include "focusfollowmouse.c"
-#include "focusurgent.c"
 #include "movestack.c"
 #include "sticky.c"
 #include "swallow.c"
