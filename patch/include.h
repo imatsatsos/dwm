@@ -14,7 +14,6 @@
 /* Other patches */
 #include "alttab.h"
 #include "attachx.h"
-#include "cool_autostart.h"
 #include "focusfollowmouse.h"
 #include "movestack.h"
 #include "sticky.h"

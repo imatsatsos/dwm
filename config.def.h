@@ -93,11 +93,6 @@ static char *colors[][ColCount] = {
 
 
 
-static const char *const autostart[] = {
-//	"/usr/local/bin/dwmblocks", NULL,
-//	"/bin/sh", "-c", "$HOME/.local/bin/onlogin.sh", NULL,
-  NULL
-};
 
 
 /* Tags
@@ -246,6 +241,9 @@ static const char *volumeup[]   = { "/bin/sh", "-c", "volume_control up && kill 
 static const char *volumedown[] = { "/bin/sh", "-c", "volume_control down && kill -45 $(pidof dwmblocks)", NULL };
 static const char *volumemute[] = { "/bin/sh", "-c", "volume_control mute && kill -45 $(pidof dwmblocks)", NULL };
 static const char *backlight[]  = { "dunst_backlight", NULL };
+static const char *mediaprev[]  = { "playerctl", "previous", NULL };
+static const char *mediaplay[]  = { "playerctl", "play-pause", NULL };
+static const char *medianext[]  = { "playerctl", "next", NULL };
 static const char *kbdcmd[]     = { "/bin/sh", "-c", "dunst_kbdlayout && kill -41 $(pidof dwmblocks)", NULL };
 static const char *screenmenu[] = { "rofi-screenshot", NULL };
 static const char *screenfull[] = { "screenshot", "fullscreen", NULL };
@@ -259,8 +257,8 @@ static const char *logoutmenu[] = { "rofi-power", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key            function                argument */
-	{ MODKEY,                       XK_p,          spawn,                  {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_d,          spawn,                  {.v = roficmd } },
+	{ MODKEY|ShiftMask,             XK_d,          spawn,                  {.v = dmenucmd } },
+	{ MODKEY,                       XK_p,          spawn,                  {.v = roficmd } },
 	{ MODKEY,                       XK_Return,     spawn,                  {.v = termcmd } },
 	{ MODKEY,                       XK_e,          spawn,                  {.v = filescmd } },
 	{ MODKEY|ControlMask,           XK_l,          spawn,                  {.v = lockcmd } },
@@ -275,6 +273,9 @@ static const Key keys[] = {
 	{ 0,               XF86XK_AudioMute,           spawn,                  {.v = volumemute } },
 	{ 0,               XF86XK_MonBrightnessUp,     spawn,                  {.v = backlight } },
 	{ 0,               XF86XK_MonBrightnessDown,   spawn,                  {.v = backlight } },
+	{ 0,               XF86XK_AudioPrev,           spawn,                  {.v = mediaprev } },
+	{ 0,               XF86XK_AudioPlay,           spawn,                  {.v = mediaplay } },
+	{ 0,               XF86XK_AudioNext,           spawn,                  {.v = medianext } },
 	{ MODKEY,                       XK_b,          togglebar,              {0} },
 	{ MODKEY,                       XK_j,          focusstack,             {.i = +1 } },
 	{ MODKEY,                       XK_k,          focusstack,             {.i = -1 } },
@@ -307,8 +308,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_t,          setlayout,              {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,          setlayout,              {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,          setlayout,              {.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,      setlayout,              {0} },
-	{ MODKEY|ShiftMask,             XK_space,      togglefloating,         {0} },
+	{ MODKEY|ShiftMask,             XK_space,      setlayout,              {0} },
+	{ MODKEY,                       XK_space,      togglefloating,         {0} },
 	{ MODKEY,                       XK_y,          togglefullscreen,       {0} },
 	{ MODKEY|ShiftMask,             XK_s,          togglesticky,           {0} },
 	{ MODKEY,                       XK_0,          view,                   {.ui = ~0 } },
