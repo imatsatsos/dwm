@@ -94,10 +94,8 @@ static char *colors[][ColCount] = {
 
 
 static const char *const autostart[] = {
-	"/usr/local/bin/dwmblocks", NULL,
-  "/usr/bin/pipewire", NULL,
-  "/usr/bin/pipewire-pulse", NULL,
-  "/home/john/.local/bin/onlogin.sh", NULL,
+//	"/usr/local/bin/dwmblocks", NULL,
+//	"/bin/sh", "-c", "$HOME/.local/bin/onlogin.sh", NULL,
   NULL
 };
 
@@ -242,18 +240,18 @@ static const char *dmenucmd[] = {
 };
 static const char *termcmd[]    = { "/bin/sh", "-c", "$TERMINAL", NULL };
 static const char *filescmd[]   = { "pcmanfm", NULL };
-static const char *roficmd[]    = { "/home/john/.local/bin/rofi-launcher", NULL };
-static const char *lockcmd[]    = { "/home/john/.config/i3/scripts/i3exit", "lock", NULL };
-static const char *volumeup[]   = { "/bin/sh", "-c", "/home/john/.local/bin/volume_control up && kill -45 $(pidof dwmblocks)", NULL };
-static const char *volumedown[] = { "/bin/sh", "-c", "/home/john/.local/bin/volume_control down && kill -45 $(pidof dwmblocks)", NULL };
-static const char *volumemute[] = { "/bin/sh", "-c", "/home/john/.local/bin/volume_control mute && kill -45 $(pidof dwmblocks)", NULL };
-static const char *backlight[]  = { "/home/john/.local/bin/dunst_backlight", NULL };
-static const char *kbdcmd[]     = { "/bin/sh", "-c", "/home/john/.local/bin/dunst_kbdlayout && kill -41 $(pidof dwmblocks)", NULL };
-static const char *screenmenu[] = { "/home/john/.local/bin/rofi-screenshot", NULL };
-static const char *screenfull[] = { "/home/john/.local/bin/screenshot", "fullscreen", NULL };
-static const char *screenwin[]  = { "/home/john/.local/bin/screenshot", "window", NULL };
-static const char *screensel[]  = { "/home/john/.local/bin/screenshot", "selection", NULL };
-static const char *logoutmenu[] = { "/home/john/.local/bin/rofi-power", NULL };
+static const char *roficmd[]    = { "rofi-launcher", NULL };
+static const char *lockcmd[]    = { "i3exit", "lock", NULL };
+static const char *volumeup[]   = { "/bin/sh", "-c", "volume_control up && kill -45 $(pidof dwmblocks)", NULL };
+static const char *volumedown[] = { "/bin/sh", "-c", "volume_control down && kill -45 $(pidof dwmblocks)", NULL };
+static const char *volumemute[] = { "/bin/sh", "-c", "volume_control mute && kill -45 $(pidof dwmblocks)", NULL };
+static const char *backlight[]  = { "dunst_backlight", NULL };
+static const char *kbdcmd[]     = { "/bin/sh", "-c", "dunst_kbdlayout && kill -41 $(pidof dwmblocks)", NULL };
+static const char *screenmenu[] = { "rofi-screenshot", NULL };
+static const char *screenfull[] = { "screenshot", "fullscreen", NULL };
+static const char *screenwin[]  = { "screenshot", "window", NULL };
+static const char *screensel[]  = { "screenshot", "selection", NULL };
+static const char *logoutmenu[] = { "rofi-power", NULL };
 
 /* This defines the name of the executable that handles the bar (used for signalling purposes) */
 #define STATUSBAR "dwmblocks"
@@ -263,7 +261,7 @@ static const Key keys[] = {
 	/* modifier                     key            function                argument */
 	{ MODKEY,                       XK_p,          spawn,                  {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_d,          spawn,                  {.v = roficmd } },
-	{ MODKEY|ShiftMask,             XK_Return,     spawn,                  {.v = termcmd } },
+	{ MODKEY,                       XK_Return,     spawn,                  {.v = termcmd } },
 	{ MODKEY,                       XK_e,          spawn,                  {.v = filescmd } },
 	{ MODKEY|ControlMask,           XK_l,          spawn,                  {.v = lockcmd } },
 	{ Mod1Mask,                     XK_Shift_L,    spawn,                  {.v = kbdcmd } },
@@ -286,7 +284,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_l,          setmfact,               {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_j,          movestack,              {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,          movestack,              {.i = -1 } },
-	{ MODKEY,                       XK_Return,     zoom,                   {0} },
+	{ MODKEY|ShiftMask,             XK_Return,     zoom,                   {0} },
 	{ MODKEY|Mod4Mask,              0,             incrgaps,               {.i = +1 } },
 	{ MODKEY|Mod4Mask|ShiftMask,    0,             incrgaps,               {.i = -1 } },
 	{ MODKEY|Mod4Mask,              0,             incrigaps,              {.i = +1 } },
