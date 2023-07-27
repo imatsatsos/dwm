@@ -12,14 +12,14 @@
 #include "bar_systray.c"
 
 /* Other patches */
-#include "alttab.c"
 #include "attachx.c"
 #include "focusfollowmouse.c"
 #include "movestack.c"
 #include "sticky.c"
-#include "swallow.c"
+#include "tab.c"
 #include "togglefullscreen.c"
 #include "vanitygaps.c"
+#include "winview.c"
 #include "zoomswap.c"
 /* Layouts */
 #include "layout_facts.c"

@@ -4,26 +4,21 @@ You can find the keybindings [here](https://github.com/imatsatsos/dwm/wiki#keybi
 ![1690027396](https://github.com/imatsatsos/dwm/assets/49369992/a38bbb19-95e6-4766-b97f-9065c29dc35c)
 
 ## Build & install
-Install dependencies:
+Install dependencies:  
 ```base-devel libX11-devel libXft-devel libXinerama-devel pango-devel fontconfig-devel freetype-devel```
 
-Build and install:
+Build and install:  
 ```make install```
 
-## Requirements
 ### Apps
-```alacritty pcmanfm rofi dmenu picom xwallpaper i3lock dunst maim```
+```st dmenu pcmanfm rofi picom xwallpaper i3lock dunst maim```
 
 ### Statusbar
 - dwmblocks from my [custom build](https://github.com/imatsatsos/dwmblocks-async)
 - Status bar script from my [dotfiles](https://github.com/imatsatsos/dotfiles/tree/main/.local/bin/status)
-Dependencies: ```upower alsa-utils xset```
 
-### Misc
-```polkit-gnome gnome-keyring pipewire wireplumber xrdb xclip xsetroot setxkbmap xdg-utils xrdb```
-
-## Other info:
-- Font: [Shure Tech Mono Nerd](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/ShareTechMono)
+### Other info:
+- Font: [Inter](https://github.com/rsms/inter)
 - Wallpaper: [link](https://wallhaven.cc/w/exwgv8)
 
 ## Patches
@@ -32,18 +27,18 @@ Dependencies: ```upower alsa-utils xset```
 - BAR_SYSTRAY
 - BAR_DMENUMATCHTOP
 - BAR_PANGO
-- ALT_TAB
+- BAR_PADDING
 - ATTACH_BOTTOM
 - FOCUSFOLLOWMOUSE
 - FOCUSONNETACTIVE
 - MOVESTACK
 - NOBORDER
-- ONLYQUITONEMPTY
 - RESIZECORNERS
 - SAVEFLOATS
 - STICKY
-- SWALLOW
 - TOGGLEFULLSCREEN
+- LOSEFULLSCREEN
 - VANITYGAPS
 - ZOOMSWAP
-
+- TAB
+- WINVIEW
