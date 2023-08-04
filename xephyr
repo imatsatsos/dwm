@@ -1,8 +1,8 @@
 #!/bin/sh
 
-Xephyr -br -ac -noreset -screen 1280x720 :1 &
+Xephyr -br -ac -noreset -screen 1280x720 :2 &
 
 if pidof -sx Xephyr >/dev/null; then
-  DISPLAY=:1 ./dwm
+  DISPLAY=:2 ./dwm
   pkill Xephyr
 fi

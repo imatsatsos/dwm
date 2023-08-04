@@ -2,12 +2,16 @@
 
 /* appearance */
 static const unsigned int borderpx       = 2;   /* border pixel of windows */
-static const unsigned int snap           = 16;  /* snap pixel */
-static const unsigned int gappih         = 6;   /* horiz inner gap between windows */
-static const unsigned int gappiv         = 6;   /* vert inner gap between windows */
-static const unsigned int gappoh         = 6;   /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov         = 6;   /* vert outer gap between windows and screen edge */
-static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
+/* This allows the bar border size to be explicitly set separately from borderpx.
+ * If left as 0 then it will default to the borderpx value of the monitor and will
+ * automatically update with setborderpx. */
+static const unsigned int barborderpx    = 4;  /* border pixel of bar */
+static const unsigned int snap           = 8;  /* snap pixel */
+static const unsigned int gappih         = 4;  /* horiz inner gap between windows */
+static const unsigned int gappiv         = 4;  /* vert inner gap between windows */
+static const unsigned int gappoh         = 4;  /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov         = 4;  /* vert outer gap between windows and screen edge */
+static const int smartgaps_fact          = 0;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 static const int showbar                 = 1;   /* 0 means no bar */
 static const int topbar                  = 0;   /* 0 means bottom bar */
 /*  Display modes of the tab bar: never shown, always shown, shown only in  */
@@ -16,8 +20,8 @@ static const int topbar                  = 0;   /* 0 means bottom bar */
 enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always};
 static const int showtab                 = showtab_auto;        /* Default tab bar show mode */
 static const int toptab                  = True;               /* False means bottom tab bar */
-static const int vertpad                 = 6;  /* vertical padding of bar */
-static const int sidepad                 = 6;  /* horizontal padding of bar */
+static const int vertpad                 = 4;  /* vertical padding of bar */
+static const int sidepad                 = 0;  /* horizontal padding of bar */
 /* Status is to be shown on: -1 (all monitors), 0 (a specific monitor by index), 'A' (active monitor) */
 static const int statusmon               = 'A';
 static const unsigned int systrayspacing = 2;   /* systray spacing */
@@ -29,38 +33,39 @@ static const int showsystray             = 1;   /* 0 means no systray */
 static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
-static const char font[]                 = "Sans 10";
-static const char dmenufont[]            = "Sans:size=10";
+static const char *fonts[]               = { "Iosevka Mats:style=medium:size=11",
+					     "JetBrainsMono Nerd Font:size=11" };
+static const char dmenufont[]            = "Iosevka Mats:style=medium:size=11";
 
 static char c000000[]                    = "#000000"; // placeholder value
 
-static char normfgcolor[]                = "#bbbbbb";
-static char normbgcolor[]                = "#0c0e0f";
-static char normbordercolor[]            = "#0c0e0f";
-static char normfloatcolor[]             = "#0c0e0f";
+static char normfgcolor[]                = "#e4e6e7"; //systray text /dmenu text
+static char normbgcolor[]                = "#0c0e0f"; //systray bg / dmenu bg
+static char normbordercolor[]            = "#0c0e0f"; //win border
+static char normfloatcolor[]             = "#0c0e0f"; //float win border
 
-static char selfgcolor[]                 = "#ffffff";
-static char selbgcolor[]                 = "#5A84BC";
-static char selbordercolor[]             = "#5A84BC";
-static char selfloatcolor[]              = "#5A84BC";
+static char selfgcolor[]                 = "#0c0e0f"; //dmenu text
+static char selbgcolor[]                 = "#5a84bc"; //dmenu bg
+static char selbordercolor[]             = "#5a84bc"; //active win border
+static char selfloatcolor[]              = "#5a84bc"; //active float win border
 
-static char titlenormfgcolor[]           = "#bbbbbb";
-static char titlenormbgcolor[]           = "#0c0e0f";
+static char titlenormfgcolor[]           = "#bbbbbb"; //title text
+static char titlenormbgcolor[]           = "#0c0e0f"; //title bg
 static char titlenormbordercolor[]       = "#444444";
 static char titlenormfloatcolor[]        = "#db8fd9";
 
-static char titleselfgcolor[]            = "#ffffff";
-static char titleselbgcolor[]            = "#5A84BC";
+static char titleselfgcolor[]            = "#99b7e0"; //title sel text
+static char titleselbgcolor[]            = "#0c0e0f"; //title sel bg
 static char titleselbordercolor[]        = "#005577";
 static char titleselfloatcolor[]         = "#005577";
 
-static char tagsnormfgcolor[]            = "#bbbbbb";
-static char tagsnormbgcolor[]            = "#0c0e0f";
+static char tagsnormfgcolor[]            = "#bbbbbb"; //tag text
+static char tagsnormbgcolor[]            = "#0c0e0f"; //tag bg
 static char tagsnormbordercolor[]        = "#444444";
 static char tagsnormfloatcolor[]         = "#db8fd9";
 
-static char tagsselfgcolor[]             = "#ffffff";
-static char tagsselbgcolor[]             = "#5A84BC";
+static char tagsselfgcolor[]             = "#0c0e0f"; //tag sel text
+static char tagsselbgcolor[]             = "#5a84bc"; //tag sel bg
 static char tagsselbordercolor[]         = "#005577";
 static char tagsselfloatcolor[]          = "#005577";
 
@@ -71,8 +76,8 @@ static char hidselbgcolor[]              = "#222222";
 
 static char urgfgcolor[]                 = "#bbbbbb";
 static char urgbgcolor[]                 = "#222222";
-static char urgbordercolor[]             = "#df5b61";
-static char urgfloatcolor[]              = "#db8fd9";
+static char urgbordercolor[]             = "#df5b61"; //urgent win border
+static char urgfloatcolor[]              = "#db8fd9"; //urgent float win border
 
 
 
@@ -123,8 +128,9 @@ static char *colors[][ColCount] = {
  */
 static char *tagicons[][NUMTAGS] =
 {
-	[DEFAULT_TAGS]        = { "一", "二", "三", "四", "五", "六", "七", "八", "九" },
-	[ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
+	//[DEFAULT_TAGS]        = { "一\u2081", "二\u2082", "三\u2083", "四\u2084", "五\u2085", "六\u2086", "七\u2087", "八\u2088", "九\u2089" },
+	[DEFAULT_TAGS]        = { "󰎤", "󰎧", "󰎪", "󰎭", "󰎱", "󰎳", "󰎶", "󰎹", "󰎼" },
+	[ALTERNATIVE_TAGS]    = { "󰎤", "󰎧", "󰎪", "󰎭", "󰎱", "󰎳", "󰎶", "󰎹", "󰎼" },
 	[ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
 
@@ -162,8 +168,11 @@ static const Rule rules[] = {
 	RULE(.class = "Gimp", .tags = 1 << 4)
 	RULE(.class = "Firefox", .tags = 1 << 7)
 	RULE(.class = "mpv", .tags = 1 << 8)
+	RULE(.class = "desktop-portal", .isfloating = 1)
 	RULE(.title = "Picture in picture", .isfloating = 1)
 	RULE(.title = "termfloat", .isfloating = 1)
+	RULE(.class = "Eog", .isfloating = 1)
+	RULE(.class = "Nsxiv", .isfloating = 1)
 };
 
 
@@ -181,12 +190,12 @@ static const Rule rules[] = {
  *    name - does nothing, intended for visual clue and for logging / debugging
  */
 static const BarRule barrules[] = {
-	/* monitor   bar    alignment         widthfunc                 drawfunc                clickfunc                hoverfunc                name */
-	{ -1,        0,     BAR_ALIGN_LEFT,   width_tags,               draw_tags,              click_tags,              hover_tags,              "tags" },
-	{  0,        0,     BAR_ALIGN_LEFT,   width_systray,            draw_systray,           click_systray,           NULL,                    "systray" },
-	{ -1,        0,     BAR_ALIGN_LEFT,   width_ltsymbol,           draw_ltsymbol,          click_ltsymbol,          NULL,                    "layout" },
-	{ statusmon, 0,     BAR_ALIGN_RIGHT,  width_status,             draw_status,            click_statuscmd,         NULL,                    "status" },
-	{ -1,        0,     BAR_ALIGN_NONE,   width_wintitle,           draw_wintitle,          click_wintitle,          NULL,                    "wintitle" },
+	/* monitor   bar    alignment             widthfunc                 drawfunc                clickfunc                hoverfunc                name */
+	{ -1,        0,     BAR_ALIGN_LEFT,       width_tags,               draw_tags,              click_tags,              hover_tags,              "tags" },
+	{  0,        0,     BAR_ALIGN_RIGHT_LEFT, width_systray,            draw_systray,           click_systray,           NULL,                    "systray" },
+	{ -1,        0,     BAR_ALIGN_LEFT,       width_ltsymbol,           draw_ltsymbol,          click_ltsymbol,          NULL,                    "layout" },
+	{ statusmon, 0,     BAR_ALIGN_RIGHT,      width_status2d,           draw_status2d,          click_statuscmd,         NULL,                    "status2d" },
+	{ -1,        0,     BAR_ALIGN_NONE,       width_wintitle,           draw_wintitle,          click_wintitle,          NULL,                    "wintitle" },
 };
 
 /* layout(s) */
@@ -222,6 +231,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = {
 	"dmenu_run",
+        "-p", "RUN:",
 	"-m", dmenumon,
 	"-fn", dmenufont,
 	"-nb", normbgcolor,
@@ -232,7 +242,7 @@ static const char *dmenucmd[] = {
 	NULL
 };
 static const char *termcmd[]    = { "/bin/sh", "-c", "$TERMINAL", NULL };
-static const char *kbdcmd[]     = { "/bin/sh", "-c", "dunst_kbdlayout && kill -41 $(pidof dwmblocks)", NULL };
+static const char *kbdcmd[]     = { "/bin/sh", "-c", "$HOME/.local/bin/status/kbdlayout notify && kill -41 $(pidof dwmblocks)", NULL };
 
 /* This defines the name of the executable that handles the bar (used for signalling purposes) */
 #define STATUSBAR "dwmblocks"
@@ -274,13 +284,14 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_q,          killclient,             {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,          quit,                   {0} },
 	{ MODKEY,                       XK_o,          winview,                {0} },
+	{ MODKEY|ShiftMask,             XK_F5,         xrdb,                   {.v = NULL } },
 	{ MODKEY,                       XK_t,          setlayout,              {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,          setlayout,              {.v = &layouts[1]} },
+	{ MODKEY,                       XK_y,          setlayout,              {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,          setlayout,              {.v = &layouts[2]} },
 	{ MODKEY|ShiftMask,             XK_space,      setlayout,              {0} },
 	{ MODKEY,                       XK_space,      togglefloating,         {0} },
-	{ MODKEY,                       XK_y,          togglefullscreen,       {0} },
-	{ MODKEY|ShiftMask,             XK_s,          togglesticky,           {0} },
+	{ MODKEY,                       XK_f,          togglefullscreen,       {0} },
+	{ MODKEY,                       XK_s,          togglesticky,           {0} },
 	{ MODKEY,                       XK_0,          view,                   {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,          tag,                    {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,      focusmon,               {.i = -1 } },
@@ -320,5 +331,4 @@ static const Button buttons[] = {
 	{ ClkTagBar,            MODKEY,              Button3,        toggletag,      {0} },
 	{ ClkTabBar,            0,                   Button1,        focuswin,       {0} },
 };
-
 

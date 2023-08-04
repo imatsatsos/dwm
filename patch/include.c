@@ -6,6 +6,7 @@
 #include "bar_dwmblocks.c"
 #include "bar_ltsymbol.c"
 #include "bar_status.c"
+#include "bar_status2d.c"
 #include "bar_statuscmd.c"
 #include "bar_tags.c"
 #include "bar_wintitle.c"
@@ -21,6 +22,7 @@
 #include "vanitygaps.c"
 #include "winview.c"
 #include "zoomswap.c"
+#include "xrdb.c"
 /* Layouts */
 #include "layout_facts.c"
 #include "layout_monocle.c"
