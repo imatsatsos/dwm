@@ -34,7 +34,7 @@ static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
 static const char *fonts[]               = { "Iosevka Mats:style=medium:size=11",
-					     "JetBrainsMono Nerd Font:size=11" };
+					     "Symbols Nerd Font Mono:size=11" };
 static const char dmenufont[]            = "Iosevka Mats:style=medium:size=11";
 
 static char c000000[]                    = "#000000"; // placeholder value
