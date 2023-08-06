@@ -127,9 +127,8 @@ static char *colors[][ColCount] = {
  * them. This works seamlessly with alternative tags and alttagsdecoration patches.
  */
 static char *tagicons[][NUMTAGS] =
-{
-	//[DEFAULT_TAGS]        = { "一\u2081", "二\u2082", "三\u2083", "四\u2084", "五\u2085", "六\u2086", "七\u2087", "八\u2088", "九\u2089" },
-	[DEFAULT_TAGS]        = { "󰎤", "󰎧", "󰎪", "󰎭", "󰎱", "󰎳", "󰎶", "󰎹", "󰎼" },
+{	//[DEFAULT_TAGS]        = { "一\u2081", "二\u2082", "三\u2083", "四\u2084", "五\u2085", "六\u2086", "七\u2087", "八\u2088", "九\u2089" },
+	[DEFAULT_TAGS]        = { "1", "2", "3", "4", "5󰉋", "6", "7󰊖", "8", "9"},
 	[ALTERNATIVE_TAGS]    = { "󰎤", "󰎧", "󰎪", "󰎭", "󰎱", "󰎳", "󰎶", "󰎹", "󰎼" },
 	[ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
