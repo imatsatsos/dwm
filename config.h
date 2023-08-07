@@ -128,7 +128,7 @@ static char *colors[][ColCount] = {
  */
 static char *tagicons[][NUMTAGS] =
 {	//[DEFAULT_TAGS]        = { "一\u2081", "二\u2082", "三\u2083", "四\u2084", "五\u2085", "六\u2086", "七\u2087", "八\u2088", "九\u2089" },
-	[DEFAULT_TAGS]        = { "1", "2", "3", "4", "5󰉋", "6", "7󰊖", "8", "9"},
+	[DEFAULT_TAGS]        = { "1", "2", "3", "4", "5󰉋", "6", "7󰊖", "8", "9" },
 	[ALTERNATIVE_TAGS]    = { "󰎤", "󰎧", "󰎪", "󰎭", "󰎱", "󰎳", "󰎶", "󰎹", "󰎼" },
 	[ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
@@ -165,13 +165,16 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
 	RULE(.class = "Gimp", .tags = 1 << 4)
-	RULE(.class = "Firefox", .tags = 1 << 7)
+	RULE(.class = "Firefox", .tags = 1 << 2)
+	RULE(.class = "Brave-browser", .tags = 1 << 2)
+	RULE(.class = "Signal", .tags = 1 << 7)
 	RULE(.class = "mpv", .tags = 1 << 8)
 	RULE(.class = "desktop-portal", .isfloating = 1)
 	RULE(.title = "Picture in picture", .isfloating = 1)
 	RULE(.title = "termfloat", .isfloating = 1)
 	RULE(.class = "Eog", .isfloating = 1)
 	RULE(.class = "Nsxiv", .isfloating = 1)
+	RULE(.class = "File-roller", .isfloating = 1)
 };
 
 

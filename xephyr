@@ -2,6 +2,8 @@
 
 Xephyr -br -ac -noreset -screen 1280x720 :2 &
 
+echo "starting dwm of current directory"
+
 if pidof -sx Xephyr >/dev/null; then
   DISPLAY=:2 ./dwm
   pkill Xephyr
